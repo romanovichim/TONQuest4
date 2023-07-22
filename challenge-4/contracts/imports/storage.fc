@@ -1,0 +1,36 @@
+global int init?;
+
+global int db::available_balance;
+global int db::service_balance;
+global slice db::admin_addr;
+global int db::last_number;
+global int db::hash;
+
+
+() init_data() impure {
+    ifnot(null?(init?)) {
+        throw(0x123);
+    }
+
+    slice ds = get_data().begin_parse();
+
+    db::available_balance = ds~load_coins();
+    db::service_balance = ds~load_coins();
+    db::admin_addr = ds~load_msg_addr();
+    db::last_number = ds~load_uint(64);
+    db::hash = slice_empty?(ds) ? 0 : ds~load_uint(256);
+
+    init? = true;
+}
+
+() pack_data() impure {
+    set_data(
+        begin_cell()
+            .store_coins(db::available_balance)
+            .store_coins(db::service_balance)
+            .store_slice(db::admin_addr)
+            .store_uint(db::last_number, 64)
+            .store_uint(db::hash, 256)
+        .end_cell()
+    );
+}

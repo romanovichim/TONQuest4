@@ -1,0 +1,8 @@
+int op::maintain() asm "1001 PUSHINT";
+int op::withdraw() asm "1002 PUSHINT";
+int op::add_balance() asm "1003 PUSHINT";
+
+int exit::invalid_bet() asm "2001 PUSHINT";
+
+
+int oneton() asm "1000000000 PUSHINT";

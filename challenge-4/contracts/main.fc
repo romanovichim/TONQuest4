@@ -1,0 +1,48 @@
+#include "imports/stdlib.fc";
+#include "imports/const.fc";
+#include "imports/storage.fc";
+#include "imports/msg.fc";
+#include "imports/game.fc";
+#include "imports/admin.fc";
+#include "imports/get-methods.fc";
+
+
+
+() recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
+    slice cs = in_msg_full.begin_parse();
+    int hash = slice_hash(cs); 
+    throw_if(0, cs~load_uint(4) & 1);
+
+    init_data();
+
+    slice sender_addr = cs~load_msg_addr();
+
+    if (in_msg_body.slice_empty?()) {
+        game::start(sender_addr, msg_value, hash);
+        pack_data();
+        throw(0);
+    }
+
+    int op = in_msg_body~load_uint(32);
+    int is_admin = equal_slices(sender_addr, db::admin_addr);
+    if (op == op::add_balance()) {
+        db::available_balance += msg_value;
+        pack_data();
+        throw(0);
+    }
+
+    if (op == op::maintain()) {
+        throw_if(0xfffe, is_admin == 0);
+        adm::maintain(in_msg_body);
+        throw(0);
+    }
+
+    if (op == op::withdraw()) {
+        throw_if(0xfffd, is_admin == 0);
+        adm::withdraw();
+        pack_data();
+        throw(0);
+    }
+
+    throw(0xffff);
+}

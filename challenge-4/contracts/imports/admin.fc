@@ -1,0 +1,22 @@
+() adm::maintain(slice in_msg_body) impure inline_ref {
+    int mode = in_msg_body~load_uint(8);
+    send_raw_message(in_msg_body~load_ref(), mode);    
+}
+
+() adm::withdraw() impure inline_ref {
+    cell body = begin_cell()
+        .store_uint(0, 32)
+        .store_slice(msg::commission_withdraw())
+        .end_cell();
+    
+    cell msg = begin_cell()
+        .store_uint(0x18, 6)
+        .store_slice(db::admin_addr)
+        .store_coins(db::service_balance)
+        .store_uint(1, 1 + 4 + 4 + 64 + 32 + 1 + 1)
+        .store_ref(body)
+        .end_cell();
+
+    db::service_balance = 0;
+    send_raw_message(msg, 0);
+}

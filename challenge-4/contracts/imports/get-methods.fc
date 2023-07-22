@@ -1,0 +1,4 @@
+(int, int, (int, int), int, int) get_info() method_id {
+    init_data();
+    return (db::available_balance, db::service_balance, parse_std_addr(db::admin_addr), db::last_number, db::hash);
+}

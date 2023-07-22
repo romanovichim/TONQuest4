@@ -1,0 +1,73 @@
+() game::payout(slice sender_addr, int amount, slice msg) impure inline_ref {
+    cell body = begin_cell()
+        .store_uint(0, 32)
+        .store_slice(msg)
+        .end_cell();
+    
+    cell msg = begin_cell()
+        .store_uint(0x18, 6)
+        .store_slice(sender_addr)
+        .store_coins(amount)
+        .store_uint(1, 1 + 4 + 4 + 64 + 32 + 1 + 1)
+        .store_ref(body)
+        .end_cell();
+    
+    send_raw_message(msg, 0);
+}  
+
+() game::start(slice sender_addr, int msg_value, int hash) impure inline_ref {
+    throw_unless(exit::invalid_bet(), msg_value == oneton());
+    int new_hash = slice_hash(
+        begin_cell()
+            .store_uint(db::hash, 256)
+            .store_uint(hash, 256)
+            .store_uint(cur_lt(), 64)
+            .store_uint(now(), 64)
+        .end_cell()
+        .begin_parse()
+    );
+
+    randomize(new_hash);
+    db::hash = new_hash;
+
+    int number = rand(10000); ;; [0; 10000)
+    db::last_number = number;
+    db::available_balance += oneton();
+    if (number < 10) { ;; win 1/2 available balance
+        int win = db::available_balance / 2;
+        int commission = muldiv(win, 10, 100);
+        win -= commission;
+
+        db::available_balance -= (win + commission);
+        db::service_balance += commission;
+
+        game::payout(sender_addr, win, msg::jackpot());
+
+        return ();
+    }
+
+    if (number < 1000) { ;; win x5
+        int win = 5 * oneton();
+        int commission = muldiv(win, 10, 100);
+        win -= commission;
+
+        db::available_balance -= (win + commission);
+        db::service_balance += commission;
+        game::payout(sender_addr, win, msg::x5());
+
+        return ();
+    }
+
+    if (number < 2000) { ;; win x2
+        int win = 2 * oneton();
+        int commission = muldiv(win, 10, 100);
+        win -= commission;
+
+        db::available_balance -= (win + commission);
+        db::service_balance += commission;
+        game::payout(sender_addr, win, msg::x2());
+
+        return ();
+    }
+
+}
