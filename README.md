@@ -2,13 +2,12 @@
 
 ## 🚩 Challenge 4: Lottery/Raffle
 
-TBD
-🌟 Play raffle and test - test a lot of smart contractsk. 
+🌟 Play raffle and test - test a lot of smart contracts. 
 
 💬 Meet other builders working in TON and get help in the [official dev chat](https://t.me/tondev_eng) or [TON learn tg](https://t.me/ton_learn)
 
 
-# Checkpoint 0:  Install 
+# Checkpoint 0:  💈 Install  💈
 
 Required: 
 * [Git](https://git-scm.com/downloads)
@@ -27,7 +26,7 @@ yarn chain
 ```
 ---
 
-# Checkpoint 1: Raffle Smart Contract and TDD
+# Checkpoint 1: 🎲 Raffle Smart Contract and TDD 🎲
 
 In this quest, we will play with the Lottery/Raffle smart contract. Detailed analysis of the contract here TBD.
 
@@ -41,7 +40,7 @@ When creating smart contracts, most of the time will be spent writing tests, so 
 
 ---
 
-# Checkpoint 2: Compile and Play
+# Checkpoint 2:  🎺 Compile and Play 🎷
 
 To play with the smart contract, we will run a simple test that will check that the transaction has been sent to the smart contract. Due to the specifics of the utility test, we will not be able to receive the message that the smart contract will send back to us. How then to check if we won?
 
@@ -82,7 +81,7 @@ I suggest you run this game test until you win, you need to catch your luck)
 
 ---
 
-# Checkpoint 3: Admin error
+# Checkpoint 3: 🔴  Admin error  🔴
 
 To check the error of illegal access to the withdrawal of money from a smart contract in the test, we will create an additional address and send a message from it with the necessary `op`.
 
@@ -109,7 +108,7 @@ yarn admin
 
 ---
 
-# Checkpoint 4: More than 1 TON
+# Checkpoint 4: 🔮 More than 1 TON 🔮
 
 Let's check that if an empty message with more than 1 TON is sent, an error will result. Just like last time, check the exit code:
 
@@ -136,7 +135,7 @@ yarn twoton
 
 ---
 
-# Checkpoint 5: Add Balance
+# Checkpoint 5: 🏁 Add Balance 🏁
 
 The test for checking the balance is simple - we call the Get method twice, and between them we send a message, adding a balance.
 
@@ -170,4 +169,7 @@ yarn addton
 
 # ⚔️ Side Quests
 
-TBD
+Quick results are great, but to play longer, enjoy the ecosystem, I suggest you the following tutorials:
+
+- [Analyze](https://github.com/romanovichim/TonFunClessons_Eng/blob/main/lessons/bonus/random/random.md) lottery/raffle contract
+
