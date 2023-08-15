@@ -4,6 +4,8 @@
 
 🌟 Play raffle and test - test a lot of smart contracts. 
 
+🎰 The final deliverable will be the skill of working with the balance of a smart contract and, of course raffle contract.
+
 💬 Meet other builders working in TON and get help in the [official dev chat](https://t.me/tondev_eng) or [TON learn tg](https://t.me/ton_learn)
 
 
