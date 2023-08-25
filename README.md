@@ -24,7 +24,6 @@ git clone https://github.com/romanovichim/TONQuest4.git
 ```sh
 cd challenge-4
 yarn install
-yarn chain
 ```
 ---
 
