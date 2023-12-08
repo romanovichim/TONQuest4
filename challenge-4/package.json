@@ -26,7 +26,8 @@
     "test": "yarn jest -i main.spec.ts",
     "admin": "yarn jest -i admin.spec.ts",
     "twoton": "yarn jest -i payload.spec.ts",
-    "addton": "yarn jest -i add.spec.ts"
+    "addton": "yarn jest -i add.spec.ts",
+    "reward": "ts-node ./scripts/reward.ts"
   },
   "dependencies": {
     "@ton-community/test-utils": "^0.2.0"
